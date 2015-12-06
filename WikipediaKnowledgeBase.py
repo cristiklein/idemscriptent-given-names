@@ -101,5 +101,28 @@ class WikipediaKnowledgeBase:
 
 		return examples[name]
 
+class WikipediaKnowledgeBaseTest(unittest.TestCase):
+	def setUp(self):
+		self.kb = WikipediaKnowledgeBase()
+	def testRetrieveMaleGivenNames(self):
+		self.assertIn('Cristian', self.kb.retrieveGivenNames('male'))
+		self.assertIn('Radu', self.kb.retrieveGivenNames('male'))
+
+	def testRetrieveFemaleGivenNames(self):
+		self.assertIn('Fatima', self.kb.retrieveGivenNames('female'))
+		self.assertIn('Linda', self.kb.retrieveGivenNames('female'))
+
+	def testRetrieveMaleAlternateSpellings(self):
+		self.assertEqual(self.kb.retrieveAlternateSpellings('Bogdan'), [ ])
+		self.assertEqual(self.kb.retrieveAlternateSpellings('Cristian'),
+			'Christian Cristian Krystian'.split())
+
+	def testRetrieveFemaleAlternateSpellings(self):
+		self.assertEqual(self.kb.retrieveAlternateSpellings('Barbara'), [ ])
+		self.assertEqual(set(self.kb.retrieveAlternateSpellings('Judit')),
+			'Judit Judith Judyta')
+		self.assertEqual(set(self.kb.retrieveAlternateSpellings('Linda')),
+			set())
+
 if __name__ == '__main__':
 	unittest.main()
