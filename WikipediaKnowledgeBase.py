@@ -1,8 +1,26 @@
 'This module contains the WikipediaKnowledgeBase class'
 
 import logging
+import time
 
 logger = logging.getLogger(__name__)
+
+def logStartAndEnd(method):
+	'Annotation to log when a method is entered or exited.'
+	def loggedMethod(*args, **kwargs):
+		# Produce a friendly string with all arguments
+		argsAsString = [ str(arg) for arg in args ] + \
+			[ str(k) + '=' + str(v) for k,v in kwargs.items() ]
+		argsAsString = ','.join(argsAsString)
+
+		logger.debug('Entering %s(%s)', method.__name__, argsAsString)
+		startTime = time.time()
+		ret = method(*args, **kwargs)
+		endTime = time.time()
+		logger.debug('Exiting  %s(%s) -> %s in %dms', method.__name__,
+			argsAsString, ret, (endTime - startTime) * 1000)
+		return ret
+	return loggedMethod
 
 class WikipediaKnowledgeBase:
 	'Taps into Wikipedia to retrieve trivia about given names.'
@@ -13,6 +31,7 @@ class WikipediaKnowledgeBase:
 	def __init__(self, languages = DEFAULT_LANGUAGES):
 		self.languages = languages
 
+	@logStartAndEnd
 	def retrieveGivenNames(self, gender):
 		'''
 		Returns all given names for the specified gender in the configured
@@ -29,6 +48,7 @@ class WikipediaKnowledgeBase:
 		else:
 			raise NotImplemented('Unknown gender {0}'.format(gender))
 
+	@logStartAndEnd
 	def retrieveAlternateSpellings(self, name):
 		'''
 		Returns all alternative spellings for a name, not including the name
