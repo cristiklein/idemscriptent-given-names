@@ -2,6 +2,7 @@
 
 import logging
 import time
+import unittest
 
 logger = logging.getLogger(__name__)
 
@@ -40,6 +41,16 @@ def logStartAndEnd(method):
 			argsAsString, ret, prettyInterval(endTime - startTime))
 		return ret
 	return loggedMethod
+
+class LoggingTest(unittest.TestCase):
+	def testPrettyInterval(self):
+		self.assertEqual(prettyInterval(120), '2m');
+		self.assertEqual(prettyInterval(60), '60s');
+		self.assertEqual(prettyInterval(59.5), '59s');
+		self.assertEqual(prettyInterval(1), '1000ms');
+		self.assertEqual(prettyInterval(0.999), '999ms');
+		self.assertEqual(prettyInterval(0.001), '1000µs');
+		self.assertEqual(prettyInterval(0.0001), '100µs');
 
 class WikipediaKnowledgeBase:
 	'Taps into Wikipedia to retrieve trivia about given names.'
@@ -89,3 +100,6 @@ class WikipediaKnowledgeBase:
 		}
 
 		return examples[name]
+
+if __name__ == '__main__':
+	unittest.main()
