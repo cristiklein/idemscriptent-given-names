@@ -76,7 +76,7 @@ class WikipediaKnowledgeBase:
 		elif gender == 'female':
 			return [ 'Fatima', 'Fatime', 'Linda' ]
 		else:
-			raise NotImplemented('Unknown gender {0}'.format(gender))
+			raise ValueError('Gender must be male or female')
 
 	@logStartAndEnd
 	def retrieveAlternateSpellings(self, name):
@@ -104,6 +104,7 @@ class WikipediaKnowledgeBase:
 class WikipediaKnowledgeBaseTest(unittest.TestCase):
 	def setUp(self):
 		self.kb = WikipediaKnowledgeBase()
+
 	def testRetrieveMaleGivenNames(self):
 		self.assertIn('Cristian', self.kb.retrieveGivenNames('male'))
 		self.assertIn('Radu', self.kb.retrieveGivenNames('male'))
@@ -111,6 +112,9 @@ class WikipediaKnowledgeBaseTest(unittest.TestCase):
 	def testRetrieveFemaleGivenNames(self):
 		self.assertIn('Fatima', self.kb.retrieveGivenNames('female'))
 		self.assertIn('Linda', self.kb.retrieveGivenNames('female'))
+
+	def testRetrieveInvalidGender(self):
+		self.assertRaises(ValueError, self.kb.retrieveGivenNames('hermaphrodite'))
 
 	def testRetrieveMaleAlternateSpellings(self):
 		self.assertEqual(self.kb.retrieveAlternateSpellings('Bogdan'), [ ])
