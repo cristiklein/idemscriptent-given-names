@@ -15,7 +15,13 @@ def logStartAndEnd(method):
 
 		logger.debug('Entering %s(%s)', method.__name__, argsAsString)
 		startTime = time.time()
-		ret = method(*args, **kwargs)
+		try:
+			ret = method(*args, **kwargs)
+		except Exception as e:
+			endTime = time.time()
+			logger.debug('Exiting  %s(%s) threw %s after %dms', method.__name__,
+				argsAsString, str(e), (endTime - startTime) * 1000)
+			raise
 		endTime = time.time()
 		logger.debug('Exiting  %s(%s) -> %s in %dms', method.__name__,
 			argsAsString, ret, (endTime - startTime) * 1000)
