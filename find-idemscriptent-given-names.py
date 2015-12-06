@@ -1,20 +1,20 @@
 #!/usr/bin/env python3
 
-def readNameList(fileName):
-	"""
-	Read a list of names from a file, one by line. Ignores comments
-	that start with '#' and empty lines.
-	"""
-	with open(fileName) as f:
-		lines = f.readlines()
+import logging
 
-	names = [ ]
-	for line in lines:
-		name = line[:line.rfind('#')].strip()
-		if name:
-			names.append(name)
-
-	return names
+from WikipediaKnowledgeBase import WikipediaKnowledgeBase
 
 if __name__ == '__main__':
-	print(readNameList('male-given-names.list'))
+	logging.basicConfig(
+		level = logging.DEBUG,
+		format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+	)
+
+	kb = WikipediaKnowledgeBase()
+
+	for gender in kb.GENDERS:
+		givenNames = kb.retrieveGivenNames(gender)
+		for givenName in givenNames:
+			alternateSpellings = kb.retrieveAlternateSpellings(givenName)
+			if not alternateSpellings:
+				print(givenName)
