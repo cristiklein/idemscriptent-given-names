@@ -5,6 +5,19 @@ import time
 
 logger = logging.getLogger(__name__)
 
+def prettyInterval(intervalInSeconds):
+	'Returns a string representing a time interval in a human-friendly format.'
+
+	# To reduce overhead, start with the smaller intervals
+	if intervalInSeconds < 0.002:
+		return str(int(intervalInSeconds * 1000000)) + 'µs'
+	elif intervalInSeconds < 2:
+		return str(int(intervalInSeconds * 1000)) + 'ms'
+	elif intervalInSeconds < 120:
+		return str(int(intervalInSeconds)) + 's'
+	else:
+		return str(int(intervalInSeconds / 60)) + 'm'
+
 def logStartAndEnd(method):
 	'Annotation to log when a method is entered or exited.'
 	def loggedMethod(*args, **kwargs):
@@ -19,12 +32,12 @@ def logStartAndEnd(method):
 			ret = method(*args, **kwargs)
 		except Exception as e:
 			endTime = time.time()
-			logger.debug('Exiting  %s(%s) threw %s after %dms', method.__name__,
-				argsAsString, str(e), (endTime - startTime) * 1000)
+			logger.debug('Exiting  %s(%s) threw %s after %s', method.__name__,
+				argsAsString, str(e), prettyInterval(endTime - startTime))
 			raise
 		endTime = time.time()
-		logger.debug('Exiting  %s(%s) -> %s in %dms', method.__name__,
-			argsAsString, ret, (endTime - startTime) * 1000)
+		logger.debug('Exiting  %s(%s) -> %s in %s', method.__name__,
+			argsAsString, ret, prettyInterval(endTime - startTime))
 		return ret
 	return loggedMethod
 
