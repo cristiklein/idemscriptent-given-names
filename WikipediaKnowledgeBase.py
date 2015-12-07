@@ -81,6 +81,7 @@ class WikipediaKnowledgeBase:
 
 		# Ensures atomicity
 		self.namesCache = namesCache
+		return self.namesCache
 
 	@logStartAndEnd
 	def checkArticleForGivenName(self, possibleGivenNameArticle, namesCache):
