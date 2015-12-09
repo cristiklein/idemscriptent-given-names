@@ -52,6 +52,12 @@ class TestReduceName(unittest.TestCase):
 	def test_agata(self):
 		self.assertEquals(reduceName(u'Agata'), reduceName(u'Agatha'))
 
+	def test_benjamin(self):
+		self.assertEquals(reduceName(u'Beniamin'), reduceName(u'Benjamin'))
+
+	def test_bastian(self):
+		self.assertEquals(reduceName(u'Bastian'), reduceName(u'Bastien'))
+
 	def test_victoria(self):
 		self.assertEquals(reduceName(u'Victoria'), reduceName(u'Wiktoria'))
 		self.assertEquals(reduceName(u'Victoria'), reduceName(u'Viktoria'))
