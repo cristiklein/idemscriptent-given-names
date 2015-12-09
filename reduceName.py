@@ -18,5 +18,10 @@ def reduceName(name):
 	if type(name) == unicode:
 		name = unidecode(name)
 
+	# Double metaphone quirks
+	name = name.replace('Ch', 'K')
+	name = name.replace('C', 'K') # Romanian never uses K
+	name = name.replace('w', 'v') # Polish does not have v
+
 	dmeta = fuzzy.DMetaphone()
 	return dmeta(name)[0]
