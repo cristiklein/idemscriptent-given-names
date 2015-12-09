@@ -21,7 +21,7 @@ class TestReduceName(unittest.TestCase):
 		self.assertEquals(reduceName(u'Stefan'), reduceName(u'Ștefan'))
 
 	def test_leo(self):
-		self.assertEquals(reduceName(u'Leo'), reduceName(u'Leon'))
+		self.assertNotEquals(reduceName(u'Leo'), reduceName(u'Leon'))
 
 	def test_anna(self):
 		self.assertEquals(reduceName(u'Anna'), reduceName(u'Ana'))
