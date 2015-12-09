@@ -19,14 +19,9 @@ if __name__ == '__main__':
 
 		with open(fileName) as f:
 			for line in f.readlines():
-				line = line.strip()
-
-				if '/' in line:
-					# These names are already confusing it a single language,
-					# e.g., Louis / Luis. Ignore them right away
-					continue
-
-				names[gender].append(line)
+				for name in line.split('/'):
+					name = name.strip().capitalize()
+					names[gender].append(name)
 
 	reductionToNames = {
 		'm': defaultdict(set),
