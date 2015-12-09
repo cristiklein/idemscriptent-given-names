@@ -18,5 +18,14 @@ class TestReduceName(unittest.TestCase):
 		self.assertEquals(reduceName('Stefan'), reduceName('Stephan'))
 		self.assertEquals(reduceName('Stefan'), reduceName('Ștefan'))
 
+	def test_leo(self):
+		self.assertEquals(reduceName('Leo'), reduceName('Leon'))
+
+	def test_anna(self):
+		self.assertEquals(reduceName('Anna'), reduceName('Ana'))
+
+	def test_different(self):
+		self.assertNotEquals(reduceName('Barbara'), reduceName('Cristian'))
+
 if __name__ == '__main__':
 	unittest.main()
