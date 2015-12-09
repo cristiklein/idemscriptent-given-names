@@ -20,7 +20,7 @@ if __name__ == '__main__':
 		with open(fileName) as f:
 			for line in f.readlines():
 				for name in line.split('/'):
-					name = name.strip().capitalize()
+					name = name.decode('utf8').strip().capitalize()
 					names[gender].append(name)
 
 	reductionToNames = {
