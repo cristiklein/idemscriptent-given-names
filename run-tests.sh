@@ -3,5 +3,8 @@
 # Bail out on any error
 set -e
 
-coverage run *_test.py
+coverage erase
+for FILE in *_test.py; do
+	coverage run --append $FILE
+done
 coverage report --show-missing
