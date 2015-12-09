@@ -20,6 +20,7 @@ def reduceName(name):
 
 	# Double metaphone quirks
 	name = name.replace('Ch', 'K')
+	name = name.replace('th', 't')
 	name = name.replace('C', 'K') # Romanian never uses K
 	name = name.replace('w', 'v') # Polish does not have v
 
