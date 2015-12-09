@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from collections import defaultdict
+from unidecode import unidecode
 from glob import glob
 import logging
 
@@ -35,7 +36,9 @@ if __name__ == '__main__':
 		uniqueNames = []
 		for similarSound, similarNames in reductionToNames[gender].items():
 			if len(similarNames) == 1:
-				uniqueNames.append(similarNames.pop())
+				name = similarNames.pop()
+				if name == unidecode(name):
+					uniqueNames.append(name)
 
 		for name in sorted(uniqueNames):
 			print name
