@@ -3,5 +3,5 @@
 # Bail out on any error
 set -e
 
-coverage run WikipediaKnowledgeBase.py
-coverage report
+coverage run *_test.py
+coverage report --show-missing
