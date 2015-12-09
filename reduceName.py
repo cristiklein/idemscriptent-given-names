@@ -22,7 +22,9 @@ def reduceName(name):
 	name = name.replace('Ch', 'K')
 	name = name.replace('th', 't')
 	name = name.replace('C', 'K') # Romanian never uses K
+	name = name.replace('c', 'k') # Romanian never uses K
 	name = name.replace('w', 'v') # Polish does not have v
+	name = name.replace('W', 'V') # Polish does not have v
 
 	dmeta = fuzzy.DMetaphone()
 	return dmeta(name)[0]
