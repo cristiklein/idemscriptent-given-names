@@ -40,7 +40,7 @@ if __name__ == '__main__':
 				if name == unidecode(name):
 					uniqueNames.append(name)
 
+		print len(uniqueNames), 'unique', gender, 'names'
 		for name in sorted(uniqueNames):
 			print name
 		print
-			
