@@ -37,7 +37,9 @@ if __name__ == '__main__':
 		for similarSound, similarNames in reductionToNames[gender].items():
 			if len(similarNames) == 1:
 				name = similarNames.pop()
-				if name == unidecode(name):
+				if name == unidecode(name) \
+					and 'rz' not in name \
+					and 'sz' not in name:
 					uniqueNames.append(name)
 
 		print len(uniqueNames), 'unique', gender, 'names'
