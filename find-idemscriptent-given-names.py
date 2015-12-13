@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 from collections import defaultdict
 from unidecode import unidecode
@@ -22,6 +23,8 @@ if __name__ == '__main__':
 			for line in f.readlines():
 				for name in line.split('/'):
 					name = name.decode('utf8').strip().capitalize()
+					# eliminate diacritic marks, e.g., é becomes e
+					name = unidecode(name)
 					genderToNameToLanguages[gender][name].append(language)
 
 	for gender in genderToNameToLanguages:
