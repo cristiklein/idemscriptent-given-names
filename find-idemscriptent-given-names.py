@@ -4,6 +4,14 @@ from collections import defaultdict
 from unidecode import unidecode
 from glob import glob
 
+def sortByNumLanguagesDescThenByNameAsc(nameLanguageTuple):
+	'''
+	This function returns a key that is suitable for sorting by the number of
+	languages a particular name appears in, descending, then by name
+	alphabetically, ascending.
+	'''
+	return ( -len(nameLanguageTuple[1]), nameLanguageTuple[0] )
+
 if __name__ == '__main__':
 	genderToNameToLanguages = { 'm': defaultdict(list), 'f': defaultdict(list) }
 	for fileName in glob('names-*.txt'):
@@ -18,10 +26,12 @@ if __name__ == '__main__':
 					name = unidecode(name)
 					genderToNameToLanguages[gender][name].append(language)
 
-	for gender in genderToNameToLanguages:
-		print('===', gender, '===')
+	for gender in sorted(genderToNameToLanguages):
+		print('Names for', gender)
+		print('===========')
 		for name, languages in sorted(genderToNameToLanguages[gender].items(),
-			key = lambda nameLanguage: -len(nameLanguage[1])):
+			key = sortByNumLanguagesDescThenByNameAsc):
 
 			if len(languages) > 2:
-				print("{0}: {1}".format(name, ' '.join(sorted(languages))))
+				print("{0:10}: {1}".format(name, ' '.join(sorted(languages))))
+		print()
