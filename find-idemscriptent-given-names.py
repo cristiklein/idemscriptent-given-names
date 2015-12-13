@@ -23,6 +23,5 @@ if __name__ == '__main__':
 		for name, languages in sorted(genderToNameToLanguages[gender].items(),
 			key = lambda nameLanguage: -len(nameLanguage[1])):
 
-			languages = sorted(languages)
 			if len(languages) > 2:
-				print("{0}: {1}".format(name, ' '.join(languages)))
+				print("{0}: {1}".format(name, ' '.join(sorted(languages))))
