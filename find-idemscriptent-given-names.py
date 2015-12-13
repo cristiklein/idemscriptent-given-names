@@ -13,7 +13,7 @@ if __name__ == '__main__':
 		format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
 	)
 
-	names = { 'm': [], 'f': [] }
+	genderToNameToLanguages = { 'm': defaultdict(list), 'f': defaultdict(list) }
 	for fileName in glob('names-*.txt'):
 		fileNameWithoutExt, _ = fileName.split('.')
 		_, gender, language = fileNameWithoutExt.split('-')
@@ -22,27 +22,13 @@ if __name__ == '__main__':
 			for line in f.readlines():
 				for name in line.split('/'):
 					name = name.decode('utf8').strip().capitalize()
-					names[gender].append(name)
+					genderToNameToLanguages[gender][name].append(language)
 
-	reductionToNames = {
-		'm': defaultdict(set),
-		'f': defaultdict(set),
-	}
-	for gender in names:
-		for name in names[gender]:
-			reductionToNames[gender][reduceName(name)].add(name)
+	for gender in genderToNameToLanguages:
+		print '===', gender, '==='
+		for name, languages in sorted(genderToNameToLanguages[gender].iteritems(),
+			key = lambda nameLanguage: -len(nameLanguage[1])):
 
-	for gender in names:
-		uniqueNames = []
-		for similarSound, similarNames in reductionToNames[gender].items():
-			if len(similarNames) == 1:
-				name = similarNames.pop()
-				if name == unidecode(name) \
-					and 'rz' not in name \
-					and 'sz' not in name:
-					uniqueNames.append(name)
-
-		print len(uniqueNames), 'unique', gender, 'names'
-		for name in sorted(uniqueNames):
-			print name
-		print
+			languages = sorted(languages)
+			if len(languages) > 2:
+				print "{0}: {1}".format(name, ' '.join(languages))
