@@ -8,7 +8,7 @@ Current Implementation
 ======================
 The script `find-idemscriptent-given-names.py` works as follows. It reads the top 100 list of baby names for French, German, Polish, Romanian and Swedish. Diacritic marks are stripped, e.g., _Léo_ become _Leo_. Finally, the names that are present in the top 100 list of at least 3 languages are displayed, sorted by the number of lists they are present in.
 
-To customise the result to your own needs, remove or add files or the form `names-m-LANG.txt` and `names-f-LANG.txt`, where LANG is the [ISO 639-1](https://en.wikipedia.org/wiki/ISO_639-1) code of a language.
+To customise the result to your own needs, remove or add files of the form `names-m-LANG.txt` and `names-f-LANG.txt`, where LANG is the [ISO 639-1](https://en.wikipedia.org/wiki/ISO_639-1) code of a language.
 
 Example Output
 ==============
